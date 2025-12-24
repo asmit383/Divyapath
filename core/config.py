@@ -1,20 +1,19 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "DivyaPath Backend"
+    PROJECT_NAME: str
     API_V1_STR: str = "/api/v1"
     
     # Kafka
-    KAFKA_BOOTSTRAP_SERVERS: str = "localhost:9092"
-    KAFKA_TOPIC_TRACKING: str = "volunteer_tracking"
+    KAFKA_BOOTSTRAP_SERVERS: str
+    KAFKA_TOPIC_TRACKING: str
     
     # Redis
-    REDIS_URL: str = "redis://localhost:6379/0"
+    REDIS_URL: str
     
     # Database
-    DATABASE_URL: str = "mysql+mysqlconnector://user:password@localhost/divyapath"
+    DATABASE_URL: str
 
-    class Config:
-        case_sensitive = True
+    model_config = SettingsConfigDict(env_file=".env", case_sensitive=True)
 
 settings = Settings()

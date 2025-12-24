@@ -1,4 +1,4 @@
-# � DivyaPath
+#  DivyaPath
 ### Real-Time Idol Tracking & Crowd Monitoring System
 
 **DivyaPath** is a next-generation "Live Google Maps" for large-scale festivals (like Jagadhatri Visarjan). It provides real-time visibility into the location of idols, crowd density, and safety monitoring.

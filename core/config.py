@@ -12,7 +12,11 @@ class Settings(BaseSettings):
     REDIS_URL: str
     
     # Database
-    DATABASE_URL: str
+    MYSQL_HOST: str
+    MYSQL_PORT: int
+    MYSQL_USER: str
+    MYSQL_PASSWORD: str
+    MYSQL_DATABASE: str
 
     model_config = SettingsConfigDict(env_file=".env", case_sensitive=True)
 

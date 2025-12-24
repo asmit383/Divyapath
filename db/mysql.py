@@ -128,3 +128,29 @@ def get_sighting_history(idol_id: str, limit: int = 50) -> List[Dict[str, Any]]:
             cursor.close()
         if cnx:
             cnx.close()
+
+def get_admin_by_username(username: str) -> Optional[Dict[str, Any]]:
+    """
+    Retrieves an admin user by username.
+    """
+    cnx = None
+    cursor = None
+    query = ("SELECT id, username, password_hash, created_at "
+             "FROM admins "
+             "WHERE username = %s")
+    results = None
+    
+    try:
+        cnx = get_connection()
+        cursor = cnx.cursor(dictionary=True)
+        cursor.execute(query, (username,))
+        results = cursor.fetchone()
+        return results
+    except mysql.connector.Error as err:
+        logger.error(f"Failed to fetch admin {username}: {err}")
+        return None
+    finally:
+        if cursor:
+            cursor.close()
+        if cnx:
+            cnx.close()

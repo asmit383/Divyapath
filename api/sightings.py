@@ -22,7 +22,7 @@ async def create_sighting(sighting: SightingSchema):
         # We use idol_id as the key to ensure all updates for a specific idol 
         # land in the same Kafka partition, preserving order.
         await send_to_kafka(
-            data=sighting.model_dump(),
+            data=sighting.model_dump(mode='json'),
             key=sighting.idol_id
         )
         return {"status": "queued", "msg": "Sighting received successfully"}

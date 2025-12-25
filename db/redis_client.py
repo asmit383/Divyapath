@@ -53,16 +53,21 @@ async def get_redis_client() -> redis.Redis:
 
 # --- High-Level Helper Functions ---
 
-async def set_latest_position(idol_id: str, data: dict):
+async def set_latest_position(idol_id: str, data: dict, ttl: int = 600):
     """
     Stores the latest position of an idol in Redis.
     Uses a simple key-value pair with JSON string.
     Key format: "idol:{idol_id}:pos"
+    
+    Args:
+        idol_id: The ID of the idol.
+        data: Position data dictionary.
+        ttl: Expiration time in seconds (default 10 minutes).
     """
     client = await get_redis_client()
     key = f"idol:{idol_id}:pos"
     try:
-        await client.set(key, json.dumps(data))
+        await client.set(key, json.dumps(data), ex=ttl)
     except Exception as e:
         logger.error(f"Redis set failed for {key}: {e}")
         raise

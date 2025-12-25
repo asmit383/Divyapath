@@ -47,5 +47,19 @@ services:
       - mysql_data:/var/lib/mysql
     restart: always
 
+  backend_consumer:
+    build: .
+    command: python -m kafka.consumer
+    depends_on:
+      - kafka
+      - redis
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - REDIS_URL=redis://redis:6379
+      - KAFKA_TOPIC_TRACKING=volunteer_tracking
+    volumes:
+       - .:/app
+    working_dir: /app
+
 volumes:
   mysql_data:

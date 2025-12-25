@@ -46,7 +46,10 @@ async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm,
     Admin Login Endpoint. 
     Exchange username/password for a JWT access token.
     """
-    user = get_admin_by_username(form_data.username)
+    # specific fix: strip whitespace from username
+    username = form_data.username.strip()
+    
+    user = get_admin_by_username(username)
     
     if not user or not verify_password(form_data.password, user["password_hash"]):
         raise HTTPException(
